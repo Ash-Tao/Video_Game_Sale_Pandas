@@ -8,37 +8,37 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
   purchase_data.head()  # Resources file is readed as "purchase_data"
   ``` 
 - Read the header to know the column when you need it.<br />
-![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Player%20Count.png)<br />
+  ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Column%20Names.png)<br />
   ``` python
   purchase_data.columns
   ```
 
 ### Targets<br />
-- Player Count
-  - `len()` get the size of the unique value on "SN".
-  - convert the results to a DataFrame.
+- Player Count<br />
+![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Player%20Count.png)<br />
+  - `len()` get the size of the unique value on "SN".<br />
+  - convert the results to a DataFrame.<br />
   ``` python
   PlayerCount_df = pd.DataFrame(
     {"Total Players": [len(purchase_data["SN"].unique())]})
   ```
-  
-- Purchasing Analysis (Total)
-  - calculate each values.
-  - create a Dictionary to hold the results.
-  - cleaner formatting for the display dtat. 
+- Purchasing Analysis (Total)<br />
+![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Purchasing%20Analysis%20(Total).png) 
+  - calculate each values.<br />
+  - create a Dictionary to hold the results.<br />
+  - cleaner formatting for the display dtat.<br />
   ``` python
   UniqueItems=len(purchase_data["Item ID"].unique())
   AveragePrice = purchase_data["Price"].mean()
   Purchases = purchase_data["Purchase ID"].count()
   TotalRevenue = purchase_data["Price"].sum()
-
+  
   PurchasingAnalysis_df = pd.DataFrame({
      "Number of Unique Items": [UniqueItems],
      "Average Price":AveragePrice,
      "Number of Purchases":Purchases,
-     "Total Revenue":TotalRevenue
-  })
-
+     "Total Revenue":TotalRevenue})
+     
   PurchasingAnalysis_df["Average Price"] = PurchasingAnalysis_df["Average Price"].map("${:,.2f}".format)
   PurchasingAnalysis_df["Total Revenue"] = PurchasingAnalysis_df["Total Revenue"].map("${:,.2f}".format)
   ```

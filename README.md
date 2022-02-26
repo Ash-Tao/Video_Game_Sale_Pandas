@@ -135,3 +135,7 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Most%20Profitable%20Items.png)<br />
   - Similar to "Most Popular Items".<br />
   - But need to convert the datatype for "Total Purchase Value" before sort on it.<br />
+
+
+### Analysis Report<br />
+[Final Analysis Report](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/AnalysisReport.docx)<br />

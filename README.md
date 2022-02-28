@@ -54,7 +54,7 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
     ``` python
     GenderDemographics_df = pd.DataFrame(Gender_df["Gender"].value_counts())
     ```
-  - Insert the have the percentage of the count values on the overall.`.value_counts(normalize=True)`<br />
+  - Insert the percentage of the overall for count values.`.value_counts(normalize=True)`<br />
     ``` python
     GenderDemographics_df.insert(1,"Percentage of Players",pd.DataFrame(Gender_df["Gender"].value_counts(normalize=True)))
     ```
@@ -62,14 +62,14 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
     ``` python
     GenderDemographics_df=GenderDemographics_df.rename(columns={"Gender":"Total Count"})
     ```
-  - Cleaner formatting for the display dtat.<br />
+  - Format the data.<br />
     ``` python
     GenderDemographics_df["Percentage of Players"] = GenderDemographics_df["Percentage of Players"].map("{:.02%}".format)
     ```
 - Purchasing Analysis (Gender)<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Purchasing%20Analysis%20(Gender).png)<br />
    > This script will be reused in the following tasks.<br />
-  - Combine both `.groupby`(grouping function) and `.agg`(aggregating function) have a summarize data on different calculation requests.<br />
+  - Combine both `.groupby`(grouping function) and `.agg`(aggregating function) to have a summarize data on different calculation requests.<br />
     ``` python
     Gender_df = purchase_data.groupby('Gender').agg({'Purchase ID': ["count"], 'Price': ['mean', 'sum']})
     ```
@@ -81,11 +81,11 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
     ``` python
     Gender_df.rename({'Purchase ID_count': 'Purchase Count', 'Price_mean': 'Average Purchase Price', 'Price_sum': 'Total Purchase Value'}, axis=1, inplace=True)
     ```
-  - Insert the value if "Avg Total Purchase per Person".<br />
+  - Insert the value of "Avg Total Purchase per Person".<br />
     ``` python
     Gender_df.insert(3,"Avg Total Purchase per Person",Gender_df["Total Purchase Value"]/GenderDemographics_df["Total Count"])
     ```
-  - Cleaner formatting for the display dtat.<br />
+  - Format the data.<br />
     ``` python
     Gender_df["Average Purchase Price"] = Gender_df["Average Purchase Price"].map("${:,.2f}".format)
     Gender_df["Total Purchase Value"] = Gender_df["Total Purchase Value"].map("${:,.2f}".format)
@@ -98,7 +98,7 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
     bins=[0,9,14,19,24,29,34,39,50]
     group_name = ["<10","10-14","15-19","20-24","25-29","30-34","35-39","+40"]
     ```
-  - Export column "Age" from Gender_df and insert the binned data, named "Age Summary"<br />
+  - Export column "Age" from AgeSN (unique player) and insert the binned data, named "Age Summary"<br />
     ``` python
     AgeSN = GenderSN_df[["Age"]]
     AgeSN.insert(0,"Age Summary",pd.cut(AgeSN["Age"], bins, labels=group_name, include_lowest=True))
@@ -115,13 +115,15 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
 - Purchasing Analysis (Age)<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Purchasing%20Analysis%20(Age).png)<br />
    > The solution to this task is a combination of the above two tasks - "Age Demographics" & "Purchasing Analysis (Gender)". <br />
-  - Used cut method to create new series of binned data on the "Age"<br />
+  - Used cut method to create new series of binned data on the "Age" (This time keep the duplicated records for players)<br />
   - Use `.groupby` on the series you created and `.agg` to have a summarized data on the different calculation requests.<br />
 
 - Top Spenders<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Top%20Spenders.png)<br />
   - Similar to the solution of "Purchasing Analysis (Gender)", without inserting a column.<br />
-  - But you need use to `.sort_values` on "Total Purchase Value" & "Purchase Count" to get the desired data arrangement.<br />
+  - But:
+    - Groupby "SN"
+    - use `.sort_values` on "Total Purchase Value" & "Purchase Count" to get the desired data arrangement.<br />
 
 - Most Popular Items<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Most%20Popular%20Items.png)<br />

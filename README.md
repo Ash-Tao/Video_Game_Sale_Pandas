@@ -71,25 +71,25 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
    > This script will be reused in the following tasks.<br />
   - Combine both `.groupby`(grouping function) and `.agg`(aggregating function) have a summarize data on different calculation requests.<br />
     ``` python
-    K = purchase_data.groupby('Gender').agg({'Purchase ID': ["count"], 'Price': ['mean', 'sum']})
+    Gender_df = purchase_data.groupby('Gender').agg({'Purchase ID': ["count"], 'Price': ['mean', 'sum']})
     ```
   - Reduce multi-index headers level - `.join()`<br />
     ``` python
-    K.columns = ["_".join(col) for col in K.columns.values]
+    Gender_df.columns = ["_".join(col) for col in Gender_df.columns.values]
     ```
   - Rename the column.<br />
     ``` python
-    K.rename({'Purchase ID_count': 'Purchase Count', 'Price_mean': 'Average Purchase Price', 'Price_sum': 'Total Purchase Value'}, axis=1, inplace=True)
+    Gender_df.rename({'Purchase ID_count': 'Purchase Count', 'Price_mean': 'Average Purchase Price', 'Price_sum': 'Total Purchase Value'}, axis=1, inplace=True)
     ```
   - Insert the value if "Avg Total Purchase per Person".<br />
     ``` python
-    K.insert(3,"Avg Total Purchase per Person",K["Total Purchase Value"]/GenderDemographics_df["Total Count"])
+    Gender_df.insert(3,"Avg Total Purchase per Person",Gender_df["Total Purchase Value"]/GenderDemographics_df["Total Count"])
     ```
   - Cleaner formatting for the display dtat.<br />
     ``` python
-    K["Average Purchase Price"] = K["Average Purchase Price"].map("${:,.2f}".format)
-    K["Total Purchase Value"] = K["Total Purchase Value"].map("${:,.2f}".format)
-    K["Avg Total Purchase per Person"] = K["Avg Total Purchase per Person"].map("${:,.2f}".format)
+    Gender_df["Average Purchase Price"] = Gender_df["Average Purchase Price"].map("${:,.2f}".format)
+    Gender_df["Total Purchase Value"] = Gender_df["Total Purchase Value"].map("${:,.2f}".format)
+    Gender_df["Avg Total Purchase per Person"] = Gender_df["Avg Total Purchase per Person"].map("${:,.2f}".format)
     ```
 - Age Demographics<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Age%20Demographics.png)<br />
@@ -100,17 +100,17 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
     ```
   - Export column "Age" from Gender_df and insert the binned data, named "Age Summary"<br />
     ``` python
-    H = Gender_df[["Age"]]
-    H.insert(0,"Age Summary",pd.cut(H["Age"], bins, labels=group_name, include_lowest=True))
+    AgeSN = GenderSN_df[["Age"]]
+    AgeSN.insert(0,"Age Summary",pd.cut(AgeSN["Age"], bins, labels=group_name, include_lowest=True))
     ```
   - Count value on "Age Summary" without sort the data.<br />
     ``` python
-    HH = pd.DataFrame(H["Age Summary"].value_counts(sort=False))
+    AgeDemographics_df = pd.DataFrame(AgeSN["Age Summary"].value_counts(sort=False))
     ```
   - Insert percentage `.value_counts(normalize=True)` and format the results.<br />
     ``` python
-    HH.insert(1,"Percentage of Players",pd.DataFrame(H["Age Summary"].value_counts(normalize=True)))
-    HH["Percentage of Players"] = HH["Percentage of Players"].map("{:,.2%}".format)
+    AgeDemographics_df.insert(1,"Percentage of Players",pd.DataFrame(AgeSN["Age Summary"].value_counts(normalize=True)))
+    AgeDemographics_df["Percentage of Players"] = AgeDemographics_df["Percentage of Players"].map("{:,.2%}".format)
     ```
 - Purchasing Analysis (Age)<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Purchasing%20Analysis%20(Age).png)<br />
@@ -133,8 +133,16 @@ Create and manipulate Pandas DataFrames to analyze customer purchasing and item 
 
 - Most Profitable Items<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/Most%20Profitable%20Items.png)<br />
-  - Similar to "Most Popular Items".<br />
-  - But need to convert the datatype for "Total Purchase Value" before sort on it.<br />
+  - Base on "Most Popular Items", replace "Total Purchase Value" from `str`to `float` format and sort on it.<br />
+    ``` python
+    MostPopularItems_df["Total Purchase Value"] = MostPopularItems_df["Total Purchase Value"].str.replace("$", "").astype('float')
+    MostProfitableItems_df = MostPopularItems_df.sort_values(["Total Purchase Value"], ascending= False)
+    ```
+  - Format "Total Purchase Value" to `str` again with "$".<br />
+    ``` python
+    MostProfitableItems_df["Total Purchase Value"] = MostProfitableItems_df["Total Purchase Value"].map("${:,.2f}".format)
+    ```
+
 
 
 

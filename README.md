@@ -1,4 +1,4 @@
-# pandas-challenge<br />
+# Video_Game_Sale_Pandas<br />
 ## Purpose<br />
 Create and manipulate Pandas DataFrames to analyze customer purchasing and item sale data.<br />
 ### Before start

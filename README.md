@@ -1,6 +1,6 @@
-# Video_Game_Sale_Pandas<br />
+# Video_Game_Sales_Pandas<br />
 ## Purpose<br />
-Create and manipulate Pandas DataFrames to analyze customer purchasing and item sale data.<br />
+Create and manipulate Pandas DataFrames to analyze customer purchasing and item sales data.<br />
 ### Before start
 - Review the table structure.<br />
 ![alt text](https://github.com/Ash-Tao/pandas-challenge/blob/main/HeroesOfPymoli/Screen%20Shot/purchase_data.png)<br />
